@@ -117,4 +117,10 @@ public class Produto {
     public int hashCode() {
         return Objects.hash(idProduto);
     }
+
+    public void setIdCategoria(Integer idCategoria) {
+    }
+
+    public void setData(Date data) {
+    }
 }

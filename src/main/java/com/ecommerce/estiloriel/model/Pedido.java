@@ -86,4 +86,10 @@ public class Pedido {
     public int hashCode() {
         return Objects.hash(idPedido);
     }
+
+    public void setIdUsuario(Usuario idUsuario) {
+    }
+
+    public void setIdStatus(Status idStatus) {
+    }
 }
