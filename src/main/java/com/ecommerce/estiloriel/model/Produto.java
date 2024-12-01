@@ -118,9 +118,4 @@ public class Produto {
         return Objects.hash(idProduto);
     }
 
-    public void setIdCategoria(Integer idCategoria) {
-    }
-
-    public void setData(Date data) {
-    }
 }

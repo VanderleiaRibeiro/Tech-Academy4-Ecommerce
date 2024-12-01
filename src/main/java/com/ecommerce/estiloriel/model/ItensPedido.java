@@ -85,4 +85,5 @@ public class ItensPedido {
     public int hashCode() {
         return Objects.hash(idItemPedido);
     }
+
 }

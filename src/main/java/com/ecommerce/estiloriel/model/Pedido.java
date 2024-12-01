@@ -34,45 +34,6 @@ public class Pedido {
         this.total = total;
     }
 
-    public Integer getIdPedido() {
-        return idPedido;
-    }
-
-    public void setIdPedido(Integer idPedido) {
-        this.idPedido = idPedido;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
-    }
 
     @Override
     public boolean equals(Object o) {

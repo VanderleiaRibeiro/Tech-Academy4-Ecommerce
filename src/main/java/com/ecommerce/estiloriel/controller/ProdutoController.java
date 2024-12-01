@@ -1,76 +1,105 @@
 package com.ecommerce.estiloriel.controller;
 
 import com.ecommerce.estiloriel.dto.ProdutoRequestDTO;
+import com.ecommerce.estiloriel.model.Categoria;
 import com.ecommerce.estiloriel.model.Produto;
+import com.ecommerce.estiloriel.repository.CategoriaRepository;
 import com.ecommerce.estiloriel.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/produtos")
 public class ProdutoController {
 
     @Autowired
-    private ProdutoRepository repository;
+    private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
     @GetMapping
     public ResponseEntity<List<Produto>> findAll() {
-        List<Produto> produtos = this.repository.findAll();
+        List<Produto> produtos = produtoRepository.findAll();
         return ResponseEntity.ok(produtos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Produto> findById(@PathVariable Integer id) {
-        Produto produto = this.repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
-        return ResponseEntity.ok(produto);
+        Optional<Produto> produtoOpt = produtoRepository.findById(id);
+        if (produtoOpt.isPresent()) {
+            return ResponseEntity.ok(produtoOpt.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
     public ResponseEntity<Produto> save(@RequestBody ProdutoRequestDTO dto) {
-        if (dto.getNome().isEmpty()) {
-            return ResponseEntity.status(428).build();
+        Optional<Categoria> categoriaOpt = categoriaRepository.findById(dto.getIdCategoria());
+        if (!categoriaOpt.isPresent()) {
+            return ResponseEntity.badRequest().build();
         }
 
-        Produto produto = new Produto();
-        produto.setNome(dto.getNome());
-        produto.setDescricao(dto.getDescricao());
-        produto.setPreco(dto.getPreco());
-        produto.setEstoque(dto.getEstoque());
-        produto.setIdCategoria(dto.getIdCategoria());
-        produto.setImagem(dto.getImagem());
-        produto.setData(dto.getData());
+        Categoria categoria = categoriaOpt.get();
 
-        this.repository.save(produto);
-        return ResponseEntity.ok(produto);
-    }
+        Produto produto = new Produto(
+                dto.getNome(),
+                dto.getDescricao(),
+                dto.getPreco(),
+                dto.getEstoque(),
+                categoria,
+                dto.getImagem(),
+                dto.getData()
+        );
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        Produto produto = this.repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+        Produto savedProduto = produtoRepository.save(produto);
 
-        this.repository.delete(produto);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(201).body(savedProduto);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Produto> update(@PathVariable Integer id, @RequestBody ProdutoRequestDTO dto) {
-        Produto produto = this.repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+        Optional<Produto> produtoOpt = produtoRepository.findById(id);
+        if (!produtoOpt.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Optional<Categoria> categoriaOpt = categoriaRepository.findById(dto.getIdCategoria());
+        if (!categoriaOpt.isPresent()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Produto produto = produtoOpt.get();
+        Categoria categoria = categoriaOpt.get();
 
         produto.setNome(dto.getNome());
         produto.setDescricao(dto.getDescricao());
         produto.setPreco(dto.getPreco());
         produto.setEstoque(dto.getEstoque());
-        produto.setIdCategoria(dto.getIdCategoria());
+        produto.setCategoria(categoria);
         produto.setImagem(dto.getImagem());
-        produto.setData(dto.getData());
+        produto.setDataCadastro(dto.getData());
 
-        this.repository.save(produto);
-        return ResponseEntity.ok(produto);
+        Produto updatedProduto = produtoRepository.save(produto);
+
+        return ResponseEntity.ok(updatedProduto);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        Optional<Produto> produtoOpt = produtoRepository.findById(id);
+        if (!produtoOpt.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        produtoRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

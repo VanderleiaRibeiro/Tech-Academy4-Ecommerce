@@ -99,4 +99,5 @@ public class LogPrecos {
     public int hashCode() {
         return Objects.hash(idLogPrecos);
     }
+
 }
