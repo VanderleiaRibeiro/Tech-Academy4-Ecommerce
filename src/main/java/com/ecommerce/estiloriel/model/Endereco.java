@@ -12,17 +12,16 @@ public class Endereco {
     @Column(name = "id_endereco")
     private Integer idEndereco;
 
-    private String cep;
+    private Integer cep;
 
     private String rua;
 
-    private String numero;
+    private Integer numero;
 
     private String complemento;
 
-    public Endereco() {}
-
-    public Endereco(String cep, String rua, String numero, String complemento) {
+    public Endereco(Integer idEndereco, Integer cep, String rua, Integer numero, String complemento) {
+        this.idEndereco = idEndereco;
         this.cep = cep;
         this.rua = rua;
         this.numero = numero;
@@ -37,11 +36,11 @@ public class Endereco {
         this.idEndereco = idEndereco;
     }
 
-    public String getCep() {
+    public Integer getCep() {
         return cep;
     }
 
-    public void setCep(String cep) {
+    public void setCep(Integer cep) {
         this.cep = cep;
     }
 
@@ -53,11 +52,11 @@ public class Endereco {
         this.rua = rua;
     }
 
-    public String getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
 
@@ -79,6 +78,7 @@ public class Endereco {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idEndereco);
+        return Objects.hashCode(idEndereco);
     }
+
 }

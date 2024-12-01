@@ -1,12 +1,6 @@
 package com.ecommerce.estiloriel.dto;
 
-public record UsuarioRequestDTO(
-        Integer idUsuario,
-        String nome,
-        String email,
-        String senha,
-        Integer idEndereco,
-        String telefone
-) {
+import java.util.Date;
 
+public record UsuarioRequestDTO(String nome, String email, String senha, Integer idEndereco, Integer telefone, Date dataCadastro ){
 }

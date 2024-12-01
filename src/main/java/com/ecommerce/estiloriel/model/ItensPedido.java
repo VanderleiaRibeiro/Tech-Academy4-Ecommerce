@@ -1,3 +1,4 @@
+
 package com.ecommerce.estiloriel.model;
 
 import jakarta.persistence.*;

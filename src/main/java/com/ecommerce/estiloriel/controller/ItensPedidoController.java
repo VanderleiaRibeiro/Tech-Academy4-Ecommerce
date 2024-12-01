@@ -48,6 +48,6 @@ public class ItensPedidoController {
         ItensPedido item = new ItensPedido(pedido, produto, dto.getQuantidade(), dto.getPreco());
         itensPedidoRepository.save(item);
 
-        return ResponseEntity.status(201).body(item);  // 201 Created
+        return ResponseEntity.status(201).body(item);
     }
 }

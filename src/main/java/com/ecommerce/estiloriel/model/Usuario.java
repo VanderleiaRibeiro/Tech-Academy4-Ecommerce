@@ -24,14 +24,14 @@ public class Usuario {
     private Endereco endereco;
 
     @Column(name = "telefone")
-    private String telefone;
+    private Integer telefone;
 
     @Column(name = "data_cadastro")
     private Date dataCadastro;
 
     public Usuario() {}
 
-    public Usuario(String nome, String email, String senha, Endereco endereco, String telefone, Date dataCadastro) {
+    public Usuario(String nome, String email, String senha, Endereco endereco, Integer telefone, Date dataCadastro) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
