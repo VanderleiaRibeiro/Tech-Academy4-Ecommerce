@@ -41,7 +41,7 @@ public class ProdutoController {
 
     @PostMapping
     public ResponseEntity<Produto> save(@RequestBody ProdutoRequestDTO dto) {
-        Optional<Categoria> categoriaOpt = categoriaRepository.findById(dto.getIdCategoria());
+        Optional<Categoria> categoriaOpt = categoriaRepository.findById(dto.idCategoria());
         if (!categoriaOpt.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
@@ -49,13 +49,13 @@ public class ProdutoController {
         Categoria categoria = categoriaOpt.get();
 
         Produto produto = new Produto(
-                dto.getNome(),
-                dto.getDescricao(),
-                dto.getPreco(),
-                dto.getEstoque(),
+                dto.nome(),
+                dto.descricao(),
+                dto.preco(),
+                dto.estoque(),
                 categoria,
-                dto.getImagem(),
-                dto.getData()
+                dto.imagem(),
+                dto.dataCadastro()
         );
 
         Produto savedProduto = produtoRepository.save(produto);
@@ -70,7 +70,7 @@ public class ProdutoController {
             return ResponseEntity.notFound().build();
         }
 
-        Optional<Categoria> categoriaOpt = categoriaRepository.findById(dto.getIdCategoria());
+        Optional<Categoria> categoriaOpt = categoriaRepository.findById(dto.idCategoria());
         if (!categoriaOpt.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
@@ -78,13 +78,13 @@ public class ProdutoController {
         Produto produto = produtoOpt.get();
         Categoria categoria = categoriaOpt.get();
 
-        produto.setNome(dto.getNome());
-        produto.setDescricao(dto.getDescricao());
-        produto.setPreco(dto.getPreco());
-        produto.setEstoque(dto.getEstoque());
+        produto.setNome(dto.nome());
+        produto.setDescricao(dto.descricao());
+        produto.setPreco(dto.preco());
+        produto.setEstoque(dto.estoque());
         produto.setCategoria(categoria);
-        produto.setImagem(dto.getImagem());
-        produto.setDataCadastro(dto.getData());
+        produto.setImagem(dto.imagem());
+        produto.setDataCadastro(dto.dataCadastro());
 
         Produto updatedProduto = produtoRepository.save(produto);
 

@@ -36,12 +36,12 @@ public class PedidoController {
 
     @PostMapping
     public ResponseEntity<Pedido> save(@RequestBody PedidoRequestDTO dto) {
-        Optional<Usuario> usuarioOpt = usuarioRepository.findById(dto.getIdUsuario());
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(dto.idUsuario());
         if (!usuarioOpt.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
 
-        Optional<Status> statusOpt = statusRepository.findById(dto.getIdStatus());
+        Optional<Status> statusOpt = statusRepository.findById(dto.idStatus());
         if (!statusOpt.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
@@ -51,9 +51,9 @@ public class PedidoController {
 
         Pedido pedido = new Pedido(
                 usuario,
-                dto.getData(),
+                dto.data(),
                 status,
-                dto.getTotal()
+                dto.total()
         );
 
         Pedido savedPedido = pedidoRepository.save(pedido);

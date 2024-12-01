@@ -20,7 +20,7 @@ public class Endereco {
 
     private String complemento;
 
-    public Endereco(Integer idEndereco, Integer cep, String rua, Integer numero, String complemento) {
+    public Endereco() {
         this.idEndereco = idEndereco;
         this.cep = cep;
         this.rua = rua;

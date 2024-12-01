@@ -21,14 +21,13 @@ public class EnderecoController {
         List<Endereco> enderecos = this.repository.findAll();
         return ResponseEntity.ok(enderecos);
     }
-
     @PostMapping
     public ResponseEntity<Endereco> save(@RequestBody EnderecoRequestDTO dto) {
-        if (dto.getCep().isEmpty() || dto.getRua().isEmpty() || dto.getNumero().isEmpty()) {
+        if (dto.cep() == null || dto.rua().isEmpty() || dto.numero() == null) {
             return ResponseEntity.status(428).build();
         }
 
-        Endereco endereco = new Endereco(dto.getCep(), dto.getRua(), dto.getNumero(), dto.getComplemento());
+        Endereco endereco = new Endereco(); //dto.cep(), dto.rua(), dto.numero(), dto.complemento()
         this.repository.save(endereco);
 
         return ResponseEntity.status(201).body(endereco);

@@ -24,11 +24,11 @@ public class CategoriaController {
 
     @PostMapping
     public ResponseEntity<Categoria> save(@RequestBody CategoriaRequestDTO dto) {
-        if (dto.getNome().isEmpty() || dto.getDescricao().isEmpty()) {
+        if (dto.nome().isEmpty() || dto.descricao().isEmpty()) {
             return ResponseEntity.status(428).build();
         }
 
-        Categoria categoria = new Categoria(dto.getNome(), dto.getDescricao());
+        Categoria categoria = new Categoria(dto.nome(), dto.descricao());
         this.repository.save(categoria);
 
         return ResponseEntity.status(201).body(categoria);

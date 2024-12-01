@@ -36,8 +36,8 @@ public class LogPrecosController {
 
     @PostMapping
     public ResponseEntity<LogPrecos> save(@RequestBody PedidoRequestDTO dto) {
-        Optional<Usuario> usuarioOpt = usuarioRepository.findById(dto.getIdUsuario());
-        Optional<Produto> produtoOpt = produtoRepository.findById(dto.getIdPedido()); // Aqui você pode querer mudar para a relação correta entre produto e pedido
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(dto.idUsuario());
+        Optional<Produto> produtoOpt = produtoRepository.findById(dto.idPedido()); // Aqui você pode querer mudar para a relação correta entre produto e pedido
 
         if (!usuarioOpt.isPresent() || !produtoOpt.isPresent()) {
             return ResponseEntity.badRequest().build();
@@ -50,8 +50,8 @@ public class LogPrecosController {
                 usuario,
                 produto,
                 new Date(),
-                dto.getTotal(),
-                dto.getTotal()
+                dto.total(),
+                dto.total()
         );
 
         logPrecosRepository.save(logPrecos);
