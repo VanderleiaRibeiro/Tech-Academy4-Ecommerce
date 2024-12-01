@@ -79,14 +79,12 @@ public class AvaliacaoController {
     @Autowired
     private AvaliacaoRepository repository;
 
-    //retorna todas as avaliações
     @GetMapping
     public ResponseEntity<List<Avaliacao>> findAll() {
         List<Avaliacao> avaliacoes = repository.findAll();
         return ResponseEntity.ok(avaliacoes);
     }
 
-    // retorna uma avaliação pelo id
     @GetMapping("/{id}")
     public ResponseEntity<Avaliacao> findById(@PathVariable Integer id) {
         Avaliacao avaliacao = repository.findById(id)
@@ -94,25 +92,23 @@ public class AvaliacaoController {
         return ResponseEntity.ok(avaliacao);
     }
 
-    // salva uma nova avaliação
     @PostMapping
     public ResponseEntity<Avaliacao> save(@RequestBody AvaliacaoRequestDTO dto) {
-        if (dto.getComentario() == null || dto.getComentario().isEmpty()) {
+        if (dto.comentario() == null || dto.comentario().isEmpty()) {
             return ResponseEntity.status(428).build(); // Caso o comentário esteja vazio
         }
 
         Avaliacao avaliacao = new Avaliacao();
-        avaliacao.setIdProduto(dto.getIdProduto());
-        avaliacao.setIdUsuario(dto.getIdUsuario());
-        avaliacao.setNota(dto.getNota());
-        avaliacao.setComentario(dto.getComentario());
-        avaliacao.setData(dto.getData());
+        avaliacao.setIdProduto(dto.idProduto());
+        avaliacao.setIdUsuario(dto.idUsuario());
+        avaliacao.setNota(dto.nota());
+        avaliacao.setComentario(dto.comentario());
+        avaliacao.setData(dto.data());
 
         repository.save(avaliacao);
         return ResponseEntity.ok(avaliacao);
     }
 
-    //exclui uma avaliação
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         Avaliacao avaliacao = repository.findById(id)
@@ -121,21 +117,20 @@ public class AvaliacaoController {
         return ResponseEntity.noContent().build();
     }
 
-    //atualiza uma avaliação existente
     @PutMapping("/{id}")
     public ResponseEntity<Avaliacao> update(@PathVariable Integer id, @RequestBody AvaliacaoRequestDTO dto) {
-        if (dto.getComentario() == null || dto.getComentario().isEmpty()) {
+        if (dto.comentario() == null || dto.comentario().isEmpty()) {
             return ResponseEntity.status(428).build(); // Caso o comentário esteja vazio
         }
 
         Avaliacao avaliacao = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Avaliação não foi encontrada"));
 
-        avaliacao.setIdProduto(dto.getIdProduto());
-        avaliacao.setIdUsuario(dto.getIdUsuario());
-        avaliacao.setNota(dto.getNota());
-        avaliacao.setComentario(dto.getComentario());
-        avaliacao.setData(dto.getData());
+        avaliacao.setIdProduto(dto.idProduto());
+        avaliacao.setIdUsuario(dto.idUsuario());
+        avaliacao.setNota(dto.nota());
+        avaliacao.setComentario(dto.comentario());
+        avaliacao.setData(dto.data());
 
         repository.save(avaliacao);
         return ResponseEntity.ok(avaliacao);
