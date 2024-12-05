@@ -29,9 +29,10 @@ public class Usuario {
     @Column(name = "data_cadastro")
     private Date dataCadastro;
 
-    public Usuario() {}
+    //public Usuario() {}
 
-    public Usuario(String nome, String email, String senha, Endereco endereco, Integer telefone, Date dataCadastro) {
+    public Usuario() {
+        this.idUsuario = idUsuario;
         this.nome = nome;
         this.email = email;
         this.senha = senha;

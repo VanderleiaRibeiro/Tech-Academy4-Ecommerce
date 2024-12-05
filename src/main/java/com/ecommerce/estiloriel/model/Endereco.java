@@ -22,8 +22,8 @@ public class Endereco {
 
     public Endereco() {
         this.idEndereco = idEndereco;
-        this.cep = cep;
         this.rua = rua;
+        this.cep = cep;
         this.numero = numero;
         this.complemento = complemento;
     }

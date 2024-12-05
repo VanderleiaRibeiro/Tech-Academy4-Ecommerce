@@ -94,12 +94,12 @@ public class ProdutoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        Optional<Produto> produtoOpt = produtoRepository.findById(id);
-        if (!produtoOpt.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
+        Produto produto = this.produtoRepository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Produto não encontrado"));
 
-        produtoRepository.deleteById(id);
+        this.produtoRepository.delete(produto);
         return ResponseEntity.noContent().build();
     }
+
 }

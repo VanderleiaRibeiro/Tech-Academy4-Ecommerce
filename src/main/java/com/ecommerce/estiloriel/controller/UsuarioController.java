@@ -1,7 +1,9 @@
 package com.ecommerce.estiloriel.controller;
 
 import com.ecommerce.estiloriel.dto.UsuarioRequestDTO;
+import com.ecommerce.estiloriel.model.Endereco;
 import com.ecommerce.estiloriel.model.Usuario;
+import com.ecommerce.estiloriel.repository.EnderecoRepository;
 import com.ecommerce.estiloriel.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     @GetMapping
     public ResponseEntity<List<Usuario>> findAll() {
@@ -35,10 +40,14 @@ public class UsuarioController {
             return ResponseEntity.status(428).build();
         }
 
+        Endereco endereco = enderecoRepository.findById(dto.idEndereco())
+                .orElseThrow(() -> new IllegalArgumentException("Endereço não encontrado"));
+
         Usuario usuario = new Usuario();
         usuario.setNome(dto.nome());
         usuario.setEmail(dto.email());
         usuario.setSenha(dto.senha());
+        usuario.setEndereco(endereco);
         usuario.setTelefone(dto.telefone());
         usuario.setDataCadastro(dto.dataCadastro());
 

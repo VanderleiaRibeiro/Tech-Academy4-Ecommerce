@@ -27,7 +27,12 @@ public class EnderecoController {
             return ResponseEntity.status(428).build();
         }
 
-        Endereco endereco = new Endereco(); //dto.cep(), dto.rua(), dto.numero(), dto.complemento()
+        Endereco endereco = new Endereco();
+        endereco.setIdEndereco(dto.idEndereco());
+        endereco.setRua(dto.rua());
+        endereco.setCep(dto.cep());
+        endereco.setNumero(dto.numero());
+        endereco.setComplemento(dto.complemento());
         this.repository.save(endereco);
 
         return ResponseEntity.status(201).body(endereco);
